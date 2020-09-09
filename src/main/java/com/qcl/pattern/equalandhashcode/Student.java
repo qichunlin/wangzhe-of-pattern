@@ -23,6 +23,10 @@ public class Student {
      * 年龄
      */
     private String age;
+
+    /**
+     * 体重
+     */
     private float weight;
 
     /**
