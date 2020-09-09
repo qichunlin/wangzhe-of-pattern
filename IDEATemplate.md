@@ -1,3 +1,46 @@
+mytransactiontemplate TransactionTemplate编程式事务模板代码
+@Autowired
+private TransactionTemplate transactionTemplate;
+
+@Override
+public String method2() {
+
+    //执行部分业务处理
+    transactionTemplate.execute(new TransactionCallback<Object>() {
+        @Override
+        public Object doInTransaction(TransactionStatus transactionStatus) {
+            //业务处理
+            //将数据保存到我们自己的业务数据库
+            return null;
+        }
+    });
+    //调用远程接口不需要占用数据库连接是用编程式事务能够在做到对代码块进行事务管理
+
+    //再次进行业务处理
+    transactionTemplate.execute(new TransactionCallback<Object>() {
+        @Override
+        public Object doInTransaction(TransactionStatus transactionStatus) {
+            //业务处理
+            //更新数据
+            return null;
+        }
+    });
+    return null;
+}
+
+
+
+
+forthread 循环创建Thread线程
+for (int i = 0; i < ; i++) {
+    Thread thread = new Thread(()->{
+        //TODO
+    });
+    thread.start();
+}
+
+
+
 threadpoolali 手动创建线程池阿里巴巴推荐使用方式
 /**
  * 创建线程池异步调用
