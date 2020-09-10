@@ -1,3 +1,38 @@
+myredissontemolate 基于redis的分布式锁(redisson)
+import org.redisson.Redisson;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
+
+/**
+ * Redisson单机版加锁解锁
+ *
+ * @author chunlin.qi@hand-china.com
+ * @version 1.0
+ * @description
+ */
+public class RedissonUtil {
+
+    public static void main(String[] args) {
+        Config config = new Config();
+
+        config.useSingleServer().setAddress("redis://127.0.0.1:6379");
+
+        RedissonClient client = Redisson.create(config);
+
+        RLock lock = client.getLock("lock1");
+
+        try {
+            lock.lock();
+            System.out.println("业务处理");
+        } finally {
+            lock.unlock();
+        }
+    }
+}
+
+
+
 mytransactiontemplate TransactionTemplate编程式事务模板代码
 @Autowired
 private TransactionTemplate transactionTemplate;
