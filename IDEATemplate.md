@@ -14,7 +14,6 @@ while (iterator.hasNext()) {
 
 
 
-
 listbigDecimaladd 计算List集合中某个BigDecimal类型数字属性的总金额
 //计算 总金额
 BigDecimal totalMoney = testList.stream().map(Apple::getMoney).reduce(BigDecimal.ZERO, BigDecimal::add);
