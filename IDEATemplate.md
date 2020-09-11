@@ -1,3 +1,86 @@
+jsonstringarraytolist fastjson将json数组解析成List集合
+//解析参数
+String value = "jsonStringArray";
+JSONObject jsonObject = JSONObject.parseObject(value);
+//获取List的账户记录数据
+JSONArray accountRecordHeadersList = jsonObject.getJSONArray("accountRecordHeadersList");
+Iterator<Object> iterator = accountRecordHeadersList.iterator();
+List<AccountRecordHeaders> accountRecordsList = new ArrayList<>();
+while (iterator.hasNext()) {
+	JSONObject next = (JSONObject) iterator.next();
+	accountRecordsList.add(JSONObject.parseObject(next.toJSONString(), AccountRecordHeaders.class));
+}
+
+
+
+
+
+listbigDecimaladd 计算List集合中某个BigDecimal类型数字属性的总金额
+//计算 总金额
+BigDecimal totalMoney = testList.stream().map(Apple::getMoney).reduce(BigDecimal.ZERO, BigDecimal::add);
+System.out.println("totalMoney:"+totalMoney);  //totalMoney:17.48
+
+
+
+listcomparinglong List集合根据某个属性去重
+// 根据id去重
+List<Apple> unique = testList.stream().collect(
+    collectingAndThen(
+            toCollection(() -> new TreeSet<>(comparingLong(Apple::getId))), ArrayList::new)
+);
+
+
+
+
+listfilter List集合根据某个属性过滤数据
+//过滤出符合条件的数据
+List<Apple> filterList = testList.stream().filter(a -> a.getName().equals("香蕉")).collect(Collectors.toList());
+
+
+
+listtomapgroupby List集合按照某个属性字段分组转map
+//List 以ID分组 Map<Integer,List<Apple>>
+Map<Integer, List<?>> groupBy = testList.stream().collect(Collectors.groupingBy(实体类::分组的属性));
+
+
+
+listtomap List集合按照某个属性转map
+/**
+ * id为key,apple对象为value
+ * List -> Map
+ * 需要注意的是：
+ * toMap 如果集合对象有重复的key，会报错Duplicate key ....
+ *  apple1,apple12的id都为1。
+ *  可以用 (k1,k2)->k1 来设置，如果有重复的key,则保留key1,舍弃key2
+ */
+Map<Integer, Apple> appleMap = testList.stream().collect(Collectors.toMap(Apple::getId, a -> a,(k1,k2)->k1));
+
+
+
+listgetoneAttribute List集合取某个对象单个值返回
+//List集合取某个对象单个值返回
+List<String> list = goodsImageList.stream().map(goodsImage -> goodsImage.getGoodsImage()).collect(Collectors.toList());
+
+
+
+
+
+arraytolist 数组转List集合
+// 数组转集合
+String[] arrays = new String[]{"a", "b", "c"};
+List<String> listStrings = Stream.of(arrays).collector(Collectors.toList()); // toSet()
+
+
+
+
+listtoarray List集合转数组
+// list集合转数组 
+String[] ss = listStrings.stream().toArray(String[]::new);
+
+
+
+
+
 myredissontemolate 基于redis的分布式锁(redisson)
 import org.redisson.Redisson;
 import org.redisson.api.RLock;
